@@ -1,5 +1,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    pixup_pet_lib::run()
+    xiaofeiyu_lib::run()
 }

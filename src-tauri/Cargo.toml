@@ -1,5 +1,5 @@
 [package]
-name = "pixup-pet"
+name = "xiaofeiyu"
 version = "1.0.0"
 description = "WebM desktop pets rendered on a transparent overlay"
 edition = "2021"
@@ -7,7 +7,7 @@ license = "MIT"
 rust-version = "1.93"
 
 [lib]
-name = "pixup_pet_lib"
+name = "xiaofeiyu_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

@@ -1,5 +1,5 @@
 // 把旧素材包（character.json / manifest.json / move_strides.json / text_clips.json 分散）
-// 合并为 pixup-pet-asset-v1 单清单 config.json。无损迁移：旧字段全部保留，新能力字段给默认值。
+// 合并为 xiaofeiyu-asset-v1 单清单 config.json。无损迁移：旧字段全部保留，新能力字段给默认值。
 // 用法：node scripts/migrate-assets.mjs [--dry]
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const charsDir = join(root, 'src-tauri/resources/characters');
 const dry = process.argv.includes('--dry');
-const FORMAT = 'pixup-pet-asset-v1';
+const FORMAT = 'xiaofeiyu-asset-v1';
 
 const readJson = (p) => {
   if (!existsSync(p)) return null;

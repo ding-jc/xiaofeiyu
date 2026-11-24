@@ -572,7 +572,9 @@ mod tests {
 
     #[test]
     fn builtin_pack_scans_with_original_layout() {
+        // 内置角色素材不入库（见 .gitignore），CI 上没有这些目录，跳过
         let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("resources/characters/shenshen");
+        if !root.exists() { eprintln!("跳过：resources/characters 未提供"); return; }
         let p = build(&root, "b", "builtin").unwrap();
         assert_eq!(p.id, "shenshen");
         assert!(p.clips.get("idle").map_or(false, |v| !v.is_empty()));
@@ -587,7 +589,7 @@ mod tests {
 
     #[test]
     fn new_format_config_json_is_preferred_and_parsed() {
-        let base = std::env::temp_dir().join(format!("pixup-pet-fmt-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-fmt-{}", std::process::id()));
         let root = base.join("mycat");
         let v = root.join("videos/idle");
         fs::create_dir_all(&v).unwrap();
@@ -620,6 +622,7 @@ mod tests {
     #[test]
     fn all_nine_builtin_packs_are_discoverable() {
         let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("resources/characters");
+        if subdirs(&root).is_empty() { eprintln!("跳过：resources/characters 未提供"); return; }
         let dirs = subdirs(&root);
         assert_eq!(dirs.len(), 9, "应内置 9 位角色");
         for d in &dirs {
@@ -635,7 +638,7 @@ mod tests {
     // 以及 actions 未列出的散落动画。验证全部被发现且无重复。
     #[test]
     fn merged_official_packs_are_fully_discovered() {
-        let base = std::env::temp_dir().join(format!("pixup-pet-merge-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-merge-{}", std::process::id()));
         let root = base.join("shenshen");
         let v = root.join("videos");
         for d in ["idle", "move", "random", "events", "节日限定"] {
@@ -685,7 +688,7 @@ mod import_tests {
 
     #[test]
     fn custom_character_json_actions_are_mapped() {
-        let base = std::env::temp_dir().join(format!("pixup-pet-pack-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-pack-{}", std::process::id()));
         let root = base.join("mycat");
         let v = root.join("videos");
         fs::create_dir_all(v.join("idle")).unwrap();

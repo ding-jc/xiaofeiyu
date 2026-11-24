@@ -3,9 +3,9 @@
 > **来源声明**：本文档基于上游仓库
 > [PC2005-cloud/dsh-pet · MAKE-YOUR-OWN-PET.md](https://github.com/PC2005-cloud/dsh-pet/blob/main/MAKE-YOUR-OWN-PET.md)
 > 整理改写；提示词库保留原文语义，目录结构、字段、校验规则与安装方式已按本仓库的
-> **pixup-pet-asset-v1** 格式重写。
+> **xiaofeiyu-asset-v1** 格式重写。
 >
-> 面向本仓库的 **pixup-pet-asset-v1** 格式：从一段提示词到可导入的素材包。
+> 面向本仓库的 **xiaofeiyu-asset-v1** 格式：从一段提示词到可导入的素材包。
 > 字段与校验规则以《[素材资产格式规范](../素材资产格式规范.md)》为准，本文只讲"怎么做出合格的素材"。
 > 三段式：**① 提示词生成绿幕视频 → ② 抠像与转码 → ③ 写 config.json 并安装**。
 
@@ -168,7 +168,7 @@ ffmpeg -i master.webm -vf "scale=640:360,format=yuva420p" -crf 40 -b:v 0 -row-mt
 
 ```json
 {
-  "format": "pixup-pet-asset-v1",
+  "format": "xiaofeiyu-asset-v1",
   "id": "mycat",
   "name": "我的猫",
   "theme": "#e8974a",

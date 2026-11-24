@@ -3,8 +3,10 @@ use std::{fs, path::{Path, PathBuf}};
 use tauri::{AppHandle, Manager};
 
 // 历史 identifier 链：新→旧依次兜底，任一有数据就搬到当前 app_data_dir。
+// 注意：这些是**历史包名**，不是品牌残留——删掉它们等于把老用户的坐标/偏好/素材包弄丢。
 const LEGACY_IDENTIFIERS: &[&str] = &[
-    "site.pixup.pet.wallpaper", // 改名为 site.pixup.pet 前的直接上代
+    "site.pixup.pet",           // 上代正式 identifier（品牌改名前的发行版）
+    "site.pixup.pet.wallpaper", // 再上一代
     "cn.dsh.pet.wallpaper",     // 更早的 dsh 时代
 ];
 

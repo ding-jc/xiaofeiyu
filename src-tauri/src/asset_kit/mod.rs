@@ -1,4 +1,4 @@
-// 统一素材格式（pixup-pet-asset-v1）转换库：探测 / 导入 / 导出，纯内存字节树运算。
+// 统一素材格式（xiaofeiyu-asset-v1）转换库：探测 / 导入 / 导出，纯内存字节树运算。
 // 运行时转换全程在本进程字节树完成，不经过 Web Worker 与 base64 跨 IPC。
 mod detect;
 mod export;
@@ -31,8 +31,14 @@ mod tests {
     }
 
     #[test]
+    fn legacy_format_name_still_detected_as_native() {
+        let t = tree_with(&[("config.json", r#"{"format":"pixup-pet-asset-v1"}"#)]);
+        assert_eq!(detect(&t), SourceKind::Native);
+    }
+
+    #[test]
     fn detect_distinguishes_formats() {
-        assert_eq!(detect(&tree_with(&[("config.json", r#"{"format":"pixup-pet-asset-v1"}"#)])), SourceKind::Native);
+        assert_eq!(detect(&tree_with(&[("config.json", r#"{"format":"xiaofeiyu-asset-v1"}"#)])), SourceKind::Native);
         assert_eq!(detect(&tree_with(&[("config.jsonc", "// c\n{}")])), SourceKind::WebDsh);
         assert_eq!(detect(&tree_with(&[("character.json", "{}")])), SourceKind::DesktopLegacy);
         assert_eq!(detect(&tree_with(&[("videos/idle/a.webm", "x")])), SourceKind::DesktopLegacy);

@@ -2767,26 +2767,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pixup-pet"
-version = "1.0.0"
-dependencies = [
- "open",
- "percent-encoding",
- "rayon",
- "serde",
- "serde_json",
- "sysinfo",
- "tauri",
- "tauri-build",
- "tauri-plugin-autostart",
- "tauri-plugin-dialog",
- "tauri-plugin-notification",
- "tauri-plugin-single-instance",
- "windows 0.62.2",
- "zip",
-]
-
-[[package]]
 name = "pkg-config"
 version = "0.3.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5261,6 +5241,26 @@ dependencies = [
  "libc",
  "once_cell",
  "pkg-config",
+]
+
+[[package]]
+name = "xiaofeiyu"
+version = "1.0.0"
+dependencies = [
+ "open",
+ "percent-encoding",
+ "rayon",
+ "serde",
+ "serde_json",
+ "sysinfo",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-autostart",
+ "tauri-plugin-dialog",
+ "tauri-plugin-notification",
+ "tauri-plugin-single-instance",
+ "windows 0.62.2",
+ "zip",
 ]
 
 [[package]]

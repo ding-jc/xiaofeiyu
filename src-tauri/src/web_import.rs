@@ -482,7 +482,7 @@ mod tests {
     }
 
     fn test_roots() -> Roots {
-        let base = std::env::temp_dir().join(format!("pixup-wi-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-wi-{}", std::process::id()));
         Roots {
             data: base.join("data"), builtin: base.join("builtin"),
             user: base.join("user"), external: base.join("external"), portable: true,
@@ -500,7 +500,7 @@ mod tests {
 
     #[test]
     fn verify_media_accepts_known_magic_and_rejects_junk() {
-        let base = std::env::temp_dir().join(format!("pixup-verify-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-verify-{}", std::process::id()));
         fs::create_dir_all(&base).unwrap();
         let mk = |name: &str, bytes: Vec<u8>| {
             let p = base.join(name);

@@ -1,4 +1,4 @@
-// 统一素材格式（pixup-pet-asset-v1）的底层文件 I/O：目录/ZIP ↔ 内存字节树。
+// 统一素材格式（xiaofeiyu-asset-v1）的底层文件 I/O：目录/ZIP ↔ 内存字节树。
 // 编解码/转换全在 Rust 进程内完成，字节不经过 base64 与 IPC，避免大素材卡顿。
 // 大文件读写用 rayon 并行，进度按 (已完成, 总数) 回调，由命令层节流 emit。
 use rayon::prelude::*;
@@ -159,7 +159,7 @@ mod tests {
 
     #[test]
     fn tree_roundtrip_dir_and_zip() {
-        let base = std::env::temp_dir().join(format!("pixup-tree-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-tree-{}", std::process::id()));
         let src = base.join("src");
         fs::create_dir_all(src.join("videos/idle")).unwrap();
         fs::write(src.join("config.json"), b"{}").unwrap();
@@ -183,7 +183,7 @@ mod tests {
 
     #[test]
     fn write_tree_rejects_traversal() {
-        let base = std::env::temp_dir().join(format!("pixup-evil-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-evil-{}", std::process::id()));
         let mut tree = Tree::new();
         tree.insert("../../evil.txt".into(), b"x".to_vec());
         assert!(write_tree(&base, &tree, true, &noop).is_err());
@@ -192,7 +192,7 @@ mod tests {
 
     #[test]
     fn progress_reports_each_file() {
-        let base = std::env::temp_dir().join(format!("pixup-prog-{}", std::process::id()));
+        let base = std::env::temp_dir().join(format!("xiaofeiyu-prog-{}", std::process::id()));
         let src = base.join("src");
         fs::create_dir_all(&src).unwrap();
         for i in 0..3 { fs::write(src.join(format!("f{i}.txt")), b"x").unwrap(); }

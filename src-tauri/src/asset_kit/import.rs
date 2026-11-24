@@ -96,7 +96,7 @@ fn push(actions: &mut Map<String, Value>, cat: &str, path: &str) {
     }
 }
 
-/// 任意源格式 → pixup-pet-asset-v1 字节树。
+/// 任意源格式 → xiaofeiyu-asset-v1 字节树。
 /// 核心：以源树为基础全量保留（文件夹结构、视频、音效、配方、辅助清单一律不丢），
 /// 只做路径规范化（扁平 webm → videos/<cat>/）与 config.json 重写。
 pub fn import_to_native(src: AssetTree, opt_id: Option<&str>) -> Result<ConvertResult, String> {

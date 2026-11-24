@@ -158,7 +158,7 @@ mod tests {
         write_text(&mut tree, "sounds/click.wav", "w");
         write_text(&mut tree, "recipe.md", "r");
         let config = json!({
-            "format": "pixup-pet-asset-v1", "id": "cat", "name": "猫咪",
+            "format": "xiaofeiyu-asset-v1", "id": "cat", "name": "猫咪",
             "actions": { "idle": ["videos/idle/待机.webm"], "move": ["videos/move/走路.webm"] },
             "persona": { "systemPrompt": "你是猫" }, "canvas": [640, 360], "scale": 1.5,
         });

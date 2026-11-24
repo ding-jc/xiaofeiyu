@@ -8,7 +8,7 @@ const PREFIX = 'assets/characters/shenshen/videos/';
 const OUT = 'src-tauri/resources/characters/shenshen/videos';
 
 const tree = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/git/trees/main?recursive=1`, {
-  headers: { 'User-Agent': 'pixup-pet' },
+  headers: { 'User-Agent': 'xiaofeiyu' },
 }).then((r) => r.json());
 if (!tree.tree) throw new Error('无法获取仓库目录树');
 
@@ -31,7 +31,7 @@ async function worker() {
     const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${p.split('/').map(encodeURIComponent).join('/')}`;
     for (let i = 0; i < 3; i++) {
       try {
-        const r = await fetch(url, { headers: { 'User-Agent': 'pixup-pet' } });
+        const r = await fetch(url, { headers: { 'User-Agent': 'xiaofeiyu' } });
         if (!r.ok) throw new Error(String(r.status));
         await writeFile(dst, Buffer.from(await r.arrayBuffer()));
         done++;

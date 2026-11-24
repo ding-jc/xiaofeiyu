@@ -2,7 +2,7 @@
   <img src="https://xiaofeiyu.2096450462.workers.dev/cover.jpg" alt="小肥鱼宠物" width="168" />
 </div>
 
-<h1 align="center">小肥鱼宠物 · pixup-pet</h1>
+<h1 align="center">小肥鱼宠物 · xiaofeiyu</h1>
 
 <p align="center">
 Windows 桌面宠物：透明置顶浮层渲染 640×360 透明 WebM，逐像素命中，<br />
@@ -33,7 +33,7 @@ Windows 桌面宠物：透明置顶浮层渲染 640×360 透明 WebM，逐像素
 
 - **透明浮层 + 逐像素命中**：点穿透明区，只有身体挡鼠标；遮挡感与真窗口一致。
 - **多角色 / 分身 / 换装**：同一角色可开多个分身，位置各自记忆。
-- **一条源文件格式**：[`pixup-pet-asset-v1`](素材资产格式规范.md)——目录即分类，清单只声明用哪些文件。
+- **一条源文件格式**：[`xiaofeiyu-asset-v1`](素材资产格式规范.md)——目录即分类，清单只声明用哪些文件。
 - **与 dsh-pet 双向兼容**：`config.jsonc`（Web 原版）与 `character.json`+`videos/`（桌面版）
   都能直接导入；也能一键导出成 dsh 插件（ZIP 或直接写入 `~/.dsh/dsh-pet/pet/`）。
 - **右键菜单 / 托盘菜单**：与主界面同一套图标与圆角面板，无窗口阴影。
@@ -119,12 +119,12 @@ pet-app/
 
 ## 素材格式：一条格式
 
-所有素材统一为 `pixup-pet-asset-v1`：**一个目录 + 一份 `config.json`**，视频放
+所有素材统一为 `xiaofeiyu-asset-v1`：**一个目录 + 一份 `config.json`**，视频放
 `videos/<分类>/`，目录名即分类。
 
 ```jsonc
 {
-  "format": "pixup-pet-asset-v1",
+  "format": "xiaofeiyu-asset-v1",
   "id": "mycat", "name": "我的猫", "theme": "#e8974a",
   "canvas": [640, 360], "scale": 0.72,
   "bodyBox": [200, 50, 440, 335], "headBox": [200, 50, 440, 167],

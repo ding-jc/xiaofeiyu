@@ -159,7 +159,7 @@ mod tests {
 
     #[test]
     fn range_response_is_206_with_correct_bytes() {
-        let p = std::env::temp_dir().join("pixup-pet-protocol-test.bin");
+        let p = std::env::temp_dir().join("xiaofeiyu-protocol-test.bin");
         fs::write(&p, b"0123456789").unwrap();
         let r = read_range(&p, Some("bytes=2-5")).unwrap();
         assert_eq!(r.status(), StatusCode::PARTIAL_CONTENT);
