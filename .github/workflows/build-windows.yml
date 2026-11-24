@@ -1,0 +1,91 @@
+name: build-windows
+
+# 仅 Windows：应用本身只支持 Windows（见 README「平台与限制」）。
+# main = 生产（发布），dev = 开发。打 tag 会自动建 draft release 并附上安装包。
+on:
+  push:
+    branches: [main, dev]
+    tags: ['v*']
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch:
+    inputs:
+      with_assets:
+        description: '构建时拉取上游角色素材（约 113MB，会明显变慢）'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: 安装前端依赖
+        run: npm ci
+
+      # 仓库不收录角色素材（体积 + 授权），默认打出来是「空壳」。
+      # 需要带素材的安装包时手动触发并勾选 with_assets。
+      - name: 拉取角色素材（可选）
+        if: inputs.with_assets
+        run: npm run assets
+
+      - name: 前端类型检查 + 构建
+        run: npm run build
+
+      - name: Rust 单测（格式转换 / 扫描 / 解压 / 深链导入）
+        working-directory: src-tauri
+        run: cargo test --lib
+
+      - name: 打包 NSIS 安装包
+        run: npx tauri build --bundles nsis
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pixup-pet-windows-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            src-tauri/target/release/bundle/nsis/*.exe
+            src-tauri/target/release/pixup-pet.exe
+
+  # 打 tag 时把安装包挂到 draft release，人工确认后再发布
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pixup-pet-windows-${{ github.sha }}
+          path: dist-artifact
+
+      - name: 创建 draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --draft \
+            --title "${GITHUB_REF_NAME}" \
+            --notes "Windows 安装包见下方附件。仓库不收录角色素材，安装后可用「添加角色」导入自己的素材包（见 docs/RECIPE.md）。" \
+            dist-artifact/*.exe

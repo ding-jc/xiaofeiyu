@@ -1,0 +1,37 @@
+{
+  "name": "pixup-pet",
+  "private": true,
+  "license": "MIT",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "tauri": "tauri",
+    "dev:app": "tauri dev",
+    "build:app": "tauri build --no-bundle",
+    "build:nsis": "tauri build --bundles nsis",
+    "build:portable": "node scripts/portable.mjs",
+    "assets": "node scripts/fetch-assets.mjs",
+    "assets:xiaoxiao": "python scripts/install-xiaoxiao.py",
+    "icons": "node scripts/gen-icons.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@floating-ui/vue": "^2.0.1",
+    "@tauri-apps/api": "^2.12.4",
+    "@tauri-apps/plugin-autostart": "^2",
+    "@tauri-apps/plugin-dialog": "^2",
+    "@tauri-apps/plugin-notification": "^2.3.1",
+    "vue": "^3.5.45",
+    "vue3-smooth-dnd": "^1.0.2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "archiver": "^7.0.1",
+    "lucide-static": "^1.77.0",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.0"
+  }
+}

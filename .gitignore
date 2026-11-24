@@ -1,0 +1,54 @@
+# ── 依赖与构建产物 ──────────────────────────────────────────────
+node_modules/
+dist/
+dist-portable/
+src-tauri/target/
+src-tauri/gen/
+
+# ── 角色素材：113MB，按需 `npm run assets` 拉取（见 THIRD_PARTY_NOTICES）──
+# 音效只有几十 KB 且是内置功能依赖，入库。
+src-tauri/resources/characters/
+
+# ── 本地调试 / 临时产物 ─────────────────────────────────────────
+.dbg/
+*.log
+check.log
+tree.json
+crates.json
+wp-readme.md
+.research/
+*.tmp
+
+# ── 各平台 AI / vibe coding 工具的本地配置（不入库）──────────────
+.cursor/
+.cursorrules
+.windsurf/
+.claude/
+.clinerules
+.continue/
+.aider*
+.trae/
+.kiro/
+.codebuddy/
+.workbuddy/
+.gemini/
+.junie/
+.qodo/
+.roo/
+.void/
+.zed/
+.idea/
+.vscode/
+*.code-workspace
+AGENTS.md
+GEMINI.md
+
+# ── 系统 ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── 敏感信息 ───────────────────────────────────────────────────
+.env
+.env.*
+*.pem

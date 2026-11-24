@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小肥鱼宠物</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // 首屏骨架：仅主界面窗显示，避免 JS/Vue 加载期间白屏。
+      // 其它窗（壁纸/浮层/菜单/待办）是透明置顶窗，保持 #app 空以免挡住桌面。
+      if (new URLSearchParams(location.search).get('view') === 'settings') {
+        document.getElementById('app').innerHTML =
+          '<div class="boot-shell" style="position:fixed;inset:0;display:flex;flex-direction:column;' +
+          'background:#fff8f9;font:13px system-ui;color:#a3949a">' +
+          '<div style="height:56px;flex:none;border-bottom:1px solid #f3e9ec"></div>' +
+          '<div style="flex:1;display:grid;place-items:center;gap:10px;grid-auto-flow:row">' +
+          '<div style="width:34px;height:34px;border-radius:50%;border:3px solid #f3e0e6;' +
+          'border-top-color:#d98aa4;animation:bootspin .8s linear infinite"></div>' +
+          '<div>正在唤醒桌宠…</div></div></div>' +
+          '<style>@keyframes bootspin{to{transform:rotate(360deg)}}</style>';
+      }
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
