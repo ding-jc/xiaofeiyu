@@ -15,7 +15,8 @@
     "assets": "node scripts/fetch-assets.mjs",
     "assets:xiaoxiao": "python scripts/install-xiaoxiao.py",
     "icons": "node scripts/gen-icons.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "assets:pack": "node scripts/pack-assets.mjs"
   },
   "dependencies": {
     "@floating-ui/vue": "^2.0.1",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@tauri-apps/cli": "^2.12.4",
     "@vitejs/plugin-vue": "^6.0.11",
+    "adm-zip": "^0.6.1",
     "archiver": "^7.0.1",
     "lucide-static": "^1.77.0",
     "typescript": "^5.9.2",

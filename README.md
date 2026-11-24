@@ -42,10 +42,14 @@ Windows 桌面宠物：透明置顶浮层渲染 640×360 透明 WebM，逐像素
 
 ## 下载与分支
 
-- **发布版**：[GitHub Releases](https://github.com/ding-jc/xiaofeiyu/releases)——Windows 安装包由 CI 自动构建，仅 Windows。
-- **分支**：`main` = 生产（对外发布），`dev` = 开发（日常提交、PR 目标）。打 `v*` tag 触发自动打包并生成 draft release。
-- 仓库**不收录角色素材**（113 MB、授权独立）：安装后用「添加角色」导入自己的包，或在本地
-  `npm run assets` 拉取素材后再构建。
+- **发布版**：[GitHub Releases](https://github.com/ding-jc/xiaofeiyu/releases)——Windows 安装包（NSIS），含 9 个内置角色。
+- **分支**：`main` = 生产（对外发布），`dev` = 开发（日常提交、PR 目标）。打 `v*` tag 会构建安装包并**直接发布** Release（源码 zip / tar.gz 由 GitHub 自动附带）。
+- 仓库**不收录角色素材**（111 MB、授权独立），构建时拉取：
+  ```bash
+  npm run assets        # 从对象存储拉取，已是最新会跳过
+  npm run assets:pack   # 维护者用：把本地素材重新打包上传
+  ```
+  打 tag 时 CI 自动执行 `npm run assets`；日常 push / PR 不拉，省流量。素材源可用 `ASSET_BASE=...` 覆盖。
 
 ## 平台与限制
 
