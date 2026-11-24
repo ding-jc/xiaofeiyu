@@ -87,9 +87,26 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          TAG="${GITHUB_REF_NAME}"
+
+          # 只发 NSIS 安装包：裸 exe 少了旁边的 resources 目录跑不起来，单发会误导。
+          # download-artifact 会还原目录结构，所以不能只匹配顶层 *.exe。
+          FILES=$(find dist-artifact -name '*-setup.exe' -type f)
+          if [ -z "$FILES" ]; then
+            echo "没有找到 NSIS 安装包（*-setup.exe）"
+            find dist-artifact -type f
+            exit 1
+          fi
+
+          # 幂等：重打同一个 tag 时先删掉旧 release，否则会残留旧附件
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release $TAG 已存在，先删除后重建"
+            gh release delete "$TAG" --yes
+          fi
+
           # 发行说明只写「修复的 bug」和「新增功能」，零碎改动不列；
           # 没有大改动时只改版本号即可（本文件不用动）。
-          gh release create "${GITHUB_REF_NAME}" \
-            --title "小肥鱼宠物 ${GITHUB_REF_NAME}" \
+          gh release create "$TAG" \
+            --title "小肥鱼宠物 $TAG" \
             --notes-file .github/release-notes.md \
-            dist-artifact/*.exe
+            $FILES
