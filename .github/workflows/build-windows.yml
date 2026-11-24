@@ -75,6 +75,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      # 发行说明在仓库里（.github/release-notes.md），必须先拿代码
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           name: xiaofeiyu-windows-${{ github.sha }}
