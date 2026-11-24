@@ -12,7 +12,7 @@ import {
 } from './widgets';
 
 /** 制作配方：直接跳开源仓库里的文档，应用内不再内置渲染。 */
-const RECIPE_URL = 'https://github.com/ding-jc/pixup-pet/blob/main/docs/RECIPE.md';
+const RECIPE_URL = 'https://github.com/ding-jc/xiaofeiyu/blob/main/docs/RECIPE.md';
 
 const DOMAINS: { label: string; icon: string }[] = [
   { label: '常规', icon: 'settings' },
