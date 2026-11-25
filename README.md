@@ -150,8 +150,9 @@ pet-app/
 ├─ src-tauri/
 │  ├─ src/                  窗口编排、浮层命中原生窗、托盘、菜单窗、素材扫描
 │  │  └─ asset_kit/         源文件格式转换（探测 / 导入 / 导出 dsh）
+│  ├─ sign.ps1              可选 Authenticode 签名（CI 用，无证书自动跳过）
 │  └─ resources/            随包素材：characters/ 与 sounds/
-├─ docs/                    制作配方与文档配图
+├─ docs/                    制作配方、代码签名接入、文档配图
 ├─ scripts/                 素材拉取、图标生成、便携版打包、冒烟测试
 ├─ 素材资产格式规范.md       源文件格式的唯一权威说明
 └─ THIRD_PARTY_NOTICES.md   素材与依赖的许可声明
