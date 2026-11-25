@@ -1,8 +1,5 @@
 Windows 桌面版安装包，含 9 个内置角色。
 
-安装包由 GitHub Actions 从本仓库构建，并带有 [SignPath Foundation](https://signpath.org/) 提供的免费代码签名
-（发布者显示为 SignPath Foundation，说明见 [Code signing policy](https://github.com/ding-jc/xiaofeiyu#code-signing-policy)）。
-
 安装后可在应用内「添加角色」导入自己的素材包，做法见 [docs/RECIPE.md](https://github.com/ding-jc/xiaofeiyu/blob/main/docs/RECIPE.md)。
 
 ## 新增

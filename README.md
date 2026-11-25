@@ -167,22 +167,6 @@ pet-app/
 | 在线导入 | 点 `video-json-pet://import?url=<清单地址>` 深链 |
 | 导出 dsh | 角色卡片「导出 dsh」得 zip，「写入 dsh」直接落到 `~/.dsh/dsh-pet/pet/` |
 
-## Code signing policy
-
-Free code signing provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
-
-Windows installers attached to [GitHub Releases](https://github.com/ding-jc/xiaofeiyu/releases) are signed this way, so the
-signature reads **SignPath Foundation** as publisher and certifies that the binary was built from this repository.
-
-- **Maintainer / approver**: [@ding-jc](https://github.com/ding-jc)
-- **Build**: every release binary is built by GitHub Actions on GitHub-hosted runners (`windows-latest`) from this public
-  repository, never on a maintainer's machine — see [`.github/workflows/build-windows.yml`](.github/workflows/build-windows.yml).
-- **Approval**: each signing request is approved manually by the maintainer in the SignPath web UI.
-- **Privacy**: this is an offline desktop application — no account, no telemetry, no analytics, and no data leaves the
-  machine. The only optional network access is user-initiated (importing an asset manifest from a URL the user provides).
-- **Scope**: source code and documentation are MIT-licensed; bundled character animations, sound effects and fonts are
-  third-party assets under their own terms — see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
 ## 许可
 
 - **代码与文档**：[MIT](LICENSE)
