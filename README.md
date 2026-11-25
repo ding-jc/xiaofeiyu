@@ -83,6 +83,8 @@ CI 会自动调用 `src-tauri/sign.ps1` 给安装包签名；没配 Secret 时�
 所以证书到期后**已发布的旧安装包仍然有效**；但每次重新构建产物都是新文件，必须重新签
 ——这一步在 CI 里几秒钟，不需要人工审批。
 
+完整接入步骤（申请表单、后台配置、仓库变量）见 [docs/CODE-SIGNING.md](docs/CODE-SIGNING.md)。
+
 </details>
 
 ## 平台与限制
