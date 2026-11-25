@@ -188,6 +188,42 @@ pet-app/
 | 在线导入 | 点 `video-json-pet://import?url=<清单地址>` 深链 |
 | 导出 dsh | 角色卡片「导出 dsh」得 zip，「写入 dsh」直接落到 `~/.dsh/dsh-pet/pet/` |
 
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
+
+Windows installers attached to [GitHub Releases](https://github.com/ding-jc/xiaofeiyu/releases) are signed this way, so the
+signature reads **SignPath Foundation** as publisher and certifies that the binary was built from this repository.
+
+| Role | Account |
+|---|---|
+| Author / committer | [@ding-jc](https://github.com/ding-jc) |
+| Reviewer | [@ding-jc](https://github.com/ding-jc) |
+| Approver | [@ding-jc](https://github.com/ding-jc) |
+
+**Build and release**
+
+- Every release binary is built by GitHub Actions on GitHub-hosted runners (`windows-latest`), never on a maintainer's
+  machine: [`.github/workflows/build-windows.yml`](.github/workflows/build-windows.yml).
+- The workflow uploads the unsigned NSIS installer as a workflow artifact, submits a signing request to SignPath and
+  waits for the result. The private key never leaves SignPath's HSM.
+- **Every signing request is approved manually** by the approver above in the SignPath web UI — nothing is signed
+  automatically on push.
+- Only the Windows NSIS installer (`*-setup.exe`) is signed. Character assets and the bundled WebView2 runtime are not
+  part of the signed payload.
+
+**Privacy**
+
+This is an offline desktop application: no account, no telemetry, no analytics, and no data is transmitted to the
+author or to third parties. Settings, logs and imported asset packs stay in the user's own profile directory. The only
+optional network access is user-initiated — opening a `video-json-pet://import?url=...` link downloads the asset
+manifest the user explicitly pointed at.
+
+**Scope**
+
+Source code and documentation are MIT-licensed. Bundled character animations, sound effects and fonts are third-party
+assets distributed under their own terms, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
 ## 许可
 
 - **代码与文档**：[MIT](LICENSE)
