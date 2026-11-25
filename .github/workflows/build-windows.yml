@@ -25,6 +25,9 @@ concurrency:
 jobs:
   build:
     runs-on: windows-latest
+    # 仓库 Secret 里配了签名证书才会真正执行签名步骤；没配则为空，自动跳过。
+    env:
+      WIN_CERT_PFX_BASE64: ${{ secrets.WIN_CERT_PFX_BASE64 }}
     steps:
       - uses: actions/checkout@v4
 
@@ -57,6 +60,24 @@ jobs:
 
       - name: 打包 NSIS 安装包
         run: npx tauri build --bundles nsis
+
+      # 只签「会被下载的文件」：安装包自带 Mark of the Web，是 SmartScreen 报警的主体；
+      # 安装后落盘的 exe 没有该标记，不签也不会再弹。证书缺失时脚本直接放行。
+      - name: 代码签名
+        if: env.WIN_CERT_PFX_BASE64 != ''
+        shell: pwsh
+        env:
+          WIN_CERT_PASSWORD: ${{ secrets.WIN_CERT_PASSWORD }}
+          WIN_CERT_CSP: ${{ secrets.WIN_CERT_CSP }}
+          WIN_CERT_KC: ${{ secrets.WIN_CERT_KC }}
+        run: |
+          $targets = @(Get-ChildItem -Path 'src-tauri/target/release/bundle/nsis/*-setup.exe' -ErrorAction SilentlyContinue)
+          $targets += @(Get-ChildItem -Path 'src-tauri/target/release/xiaofeiyu.exe' -ErrorAction SilentlyContinue)
+          if ($targets.Count -eq 0) { throw '没有找到可签名的产物' }
+          foreach ($t in $targets) {
+            ./src-tauri/sign.ps1 $t.FullName
+            if ($LASTEXITCODE -ne 0) { throw "签名失败: $($t.FullName)" }
+          }
 
       - uses: actions/upload-artifact@v4
         with:
