@@ -63,8 +63,10 @@ jobs:
 
       # 只签「会被下载的文件」：安装包自带 Mark of the Web，是 SmartScreen 报警的主体；
       # 安装后落盘的 exe 没有该标记，不签也不会再弹。证书缺失时脚本直接放行。
+      # 签名只对当次产出的文件有效（二进制变了就得重签），所以每次发布构建都要跑一遍；
+      # 这里限定 tag 与 main，PR / dev 的临时产物不签，省签名配额与时间。
       - name: 代码签名
-        if: env.WIN_CERT_PFX_BASE64 != ''
+        if: env.WIN_CERT_PFX_BASE64 != '' && (startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main')
         shell: pwsh
         env:
           WIN_CERT_PASSWORD: ${{ secrets.WIN_CERT_PASSWORD }}
