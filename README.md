@@ -54,38 +54,14 @@ Windows 桌面宠物：透明置顶浮层渲染 640×360 透明 WebM，逐像素
 ### Windows 安全提示（首次安装必看）
 
 从 GitHub 直接下载的 `*-setup.exe` 会被打上「来自网络」标记（Mark of the Web），
-而发布包**没有购买商业代码签名证书**，所以第一次运行会被 SmartScreen 拦一下：
+第一次运行可能被 SmartScreen 拦一次：
 
 > Windows 已保护你的电脑 — 应用: 未知发布者
 
-这不是病毒警报，是本机对「无签名 + 新发布者」的默认拦截。任选一种放行：
+这不是病毒警报，是本机对未签名文件的默认拦截。任选一种放行：
 
 1. 点 **更多信息** → **仍要运行**；同一版本之后不再拦。
 2. 装之前右键安装包 → **属性** → 底部勾选 **解除锁定** → 确定。
-
-<details>
-<summary>想彻底不再出现这个提示？</summary>
-
-只有代码签名能做到，三条实际路径：
-
-| 方式 | 费用 | 效果 |
-|---|---|---|
-| **SignPath.io**（开源项目免费） | 免费 | 需申请审核，通过后 CI 里一步签名 |
-| **Certum 开源代码签名证书** | 免费（1 年） | 需提交开源项目证明，云签名（SimplySign） |
-| EV 代码签名证书 | 约 ¥3000+/年 | 签完**立刻**零警告，最省心 |
-
-OV / 免费证书签完仍可能提示几次，要等微软积累下载信誉（通常几百到几千次下载后消失）。
-拿到证书后，把 `.pfx` 转 base64 存进仓库 Secrets（`WIN_CERT_PFX_BASE64`、`WIN_CERT_PASSWORD`），
-CI 会自动调用 `src-tauri/sign.ps1` 给安装包签名；没配 Secret 时该步骤自动跳过。
-签名只在 `v*` tag 与 `main` 构建时执行，PR / `dev` 的临时产物不签。
-
-审核与申请**只做一次**，之后全自动。签名随文件走、且带 RFC3161 时间戳，
-所以证书到期后**已发布的旧安装包仍然有效**；但每次重新构建产物都是新文件，必须重新签
-——这一步在 CI 里几秒钟，不需要人工审批。
-
-完整接入步骤（申请表单、后台配置、仓库变量）见 [docs/CODE-SIGNING.md](docs/CODE-SIGNING.md)。
-
-</details>
 
 ## 平台与限制
 
@@ -152,7 +128,7 @@ pet-app/
 │  │  └─ asset_kit/         源文件格式转换（探测 / 导入 / 导出 dsh）
 │  ├─ sign.ps1              可选 Authenticode 签名（CI 用，无证书自动跳过）
 │  └─ resources/            随包素材：characters/ 与 sounds/
-├─ docs/                    制作配方、代码签名接入、文档配图
+├─ docs/                    制作配方与文档配图
 ├─ scripts/                 素材拉取、图标生成、便携版打包、冒烟测试
 ├─ 素材资产格式规范.md       源文件格式的唯一权威说明
 └─ THIRD_PARTY_NOTICES.md   素材与依赖的许可声明
@@ -198,34 +174,14 @@ Free code signing provided by [SignPath.io](https://signpath.io/), certificate b
 Windows installers attached to [GitHub Releases](https://github.com/ding-jc/xiaofeiyu/releases) are signed this way, so the
 signature reads **SignPath Foundation** as publisher and certifies that the binary was built from this repository.
 
-| Role | Account |
-|---|---|
-| Author / committer | [@ding-jc](https://github.com/ding-jc) |
-| Reviewer | [@ding-jc](https://github.com/ding-jc) |
-| Approver | [@ding-jc](https://github.com/ding-jc) |
-
-**Build and release**
-
-- Every release binary is built by GitHub Actions on GitHub-hosted runners (`windows-latest`), never on a maintainer's
-  machine: [`.github/workflows/build-windows.yml`](.github/workflows/build-windows.yml).
-- The workflow uploads the unsigned NSIS installer as a workflow artifact, submits a signing request to SignPath and
-  waits for the result. The private key never leaves SignPath's HSM.
-- **Every signing request is approved manually** by the approver above in the SignPath web UI — nothing is signed
-  automatically on push.
-- Only the Windows NSIS installer (`*-setup.exe`) is signed. Character assets and the bundled WebView2 runtime are not
-  part of the signed payload.
-
-**Privacy**
-
-This is an offline desktop application: no account, no telemetry, no analytics, and no data is transmitted to the
-author or to third parties. Settings, logs and imported asset packs stay in the user's own profile directory. The only
-optional network access is user-initiated — opening a `video-json-pet://import?url=...` link downloads the asset
-manifest the user explicitly pointed at.
-
-**Scope**
-
-Source code and documentation are MIT-licensed. Bundled character animations, sound effects and fonts are third-party
-assets distributed under their own terms, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+- **Maintainer / approver**: [@ding-jc](https://github.com/ding-jc)
+- **Build**: every release binary is built by GitHub Actions on GitHub-hosted runners (`windows-latest`) from this public
+  repository, never on a maintainer's machine — see [`.github/workflows/build-windows.yml`](.github/workflows/build-windows.yml).
+- **Approval**: each signing request is approved manually by the maintainer in the SignPath web UI.
+- **Privacy**: this is an offline desktop application — no account, no telemetry, no analytics, and no data leaves the
+  machine. The only optional network access is user-initiated (importing an asset manifest from a URL the user provides).
+- **Scope**: source code and documentation are MIT-licensed; bundled character animations, sound effects and fonts are
+  third-party assets under their own terms — see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## 许可
 
